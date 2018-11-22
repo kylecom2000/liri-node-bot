@@ -3,10 +3,10 @@
 // Requiring the .env file up first.
 require('dotenv').config();
 // Variables enabling the specified modules available to liri.js.
-const Axios = require('axios');
+const axios = require('axios');
 const Spotify = require('node-spotify-api');
-const Moment = require('moment');
-const Chalk = require('chalk');
+const moment = require('moment');
+const chalk = require('chalk');
 
 
 // Making the keys.js file available to be referenced.
@@ -14,10 +14,15 @@ const keys = require("./keys.js");
 // Code required to import the `keys.js` file and store it in a variable. 
 const spotify = new Spotify(keys.spotify);
 
+// Assigning arguments to variables. 
 liriDoThis = process.argv[2];
-liriLookThis = process.argv.slice(3);
+liriLookThis = process.argv.slice(3).join("+");
 
-console.log("liriDoThis: ", liriDoThis, "liriLookThis: ", liriLookThis);
+// Search selection fun times.
+console.log(chalk`
+You have selected: {green ${liriDoThis}}
+To search for: {green ${liriLookThis}}
+`);
 
 liriBot(liriDoThis, liriLookThis);
 
@@ -30,23 +35,25 @@ function liriBot (liriDo, liriLook){
 
 //--------------------------------concert-this-----------------------------------------
         case "concert-this":
-            var queryUrl = "https://rest.bandsintown.com/artists/" + liriLook + "/events?app_id=codingbootcamp"
-            Axios.get(queryUrl).then(function(res){
+            console.log("Concerts from ", liriLook, ":");
+            var queryUrl = "https://rest.bandsintown.com/artists/" + liriLook + "/events?app_id=codingbootcamp";
+            axios.get(queryUrl).then(function(res){
                 res.data.forEach(function(concert){
-                    console.log
-(`
-Venue: ${concert.venue.name}
-Location: ${concert.venue.city},  ${concert.venue.region},  ${concert.venue.country}
-Date: ${concert.datetime}
+                    var concertDate = concert.datetime.split("T");
+                    var momentDate = moment(concertDate.shift.format("MM/DD/YYYY"));
+                    console.log(chalk`
+Venue: {red ${concert.venue}}
+Location: {blue ${concert.venue.city},  ${concert.venue.region},  ${concert.venue.country}}
+Date: {green ${momentDate}}
 `);
-                })
+                });
                
                 
 
 
             }).catch(function(err){
-                console.log("Please search for bands that exist.");
-            })
+                console.log("There seems to be a problem.");
+            });
             break;
 
 
