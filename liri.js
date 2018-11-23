@@ -39,7 +39,7 @@ function liriBot (liriDo, liriLook){
 //----------------------------------------this-----------------------------------------------------------------
         case "concert-this":
             // Display what user looked up:
-            console.log("Concerts from ",liriLook,":");
+            console.log(`Concerts from ${liriLook}`);
 
             // Set the URL for Bands in Town with search term variable.
             var queryUrl = "https://rest.bandsintown.com/artists/" + liriLook + "/events?app_id=codingbootcamp";
@@ -70,7 +70,7 @@ Date: {green ${momentDate}}
 //----------------------------------------this------------------------------------------------------------------
 //---------------------------------------------song-------------------------------------------------------------
         case "spotify-this-song":
-            console.log("spotify-this-song was checked.")
+            console.log(`Songs from ${liriLook}:`)
             spotify.search({
                 type: "track", query: liriLook, limit: 5
                 }).then(function(res){
@@ -80,10 +80,12 @@ Date: {green ${momentDate}}
 Artist: {red ${songs.artists[0].name}}
 Song Title: {green ${songs.name}}
 Album: {blue ${songs.album.name}}
-Spotify Link: {cyan {bgBlue ${songs.external_urls.spotify}}}
+Spotify Link: {black {bgBlue ${songs.external_urls.spotify}}}
                         `);
                     });
-                });
+                }).catch(function(err){
+                    console.log("There's an issue with the seach. Please try again.");
+                })
             break;
 
 
@@ -91,7 +93,19 @@ Spotify Link: {cyan {bgBlue ${songs.external_urls.spotify}}}
 //--------------------------------------------------------------------------------------------------------------
 //-----------------------------------------this-----------------------------------------------------------------
         case "movie-this":
-            console.log("movie-this was checked.")
+            var queryUrl = "http://www.omdbapi.com/?t=" + liriLook + "&y=&plot=short&apikey=trilogy";
+            axios.get(queryUrl).then(function(res){
+                console.log(chalk`
+Movie: {blueBright ${res.data.Title}}({gray ${res.data.Year}})
+Plot: {red ${res.data.Plot}}
+Players: {green ${res.data.Actors}}
+Ratings: {yellow IMDB-${res.data.imdbRating}}, {magenta RottonTomatoes-${res.data.Ratings[1].Value}}
+Country: ${res.data.Country} (${res.data.Language})
+                `);
+            
+            }).catch(function(err){
+                console.log("Not all those who wander are lost....but I'm wondering if you're lost?");
+            })
             break;
 
 
