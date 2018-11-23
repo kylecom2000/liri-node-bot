@@ -7,12 +7,12 @@
 #### Requirments
 * NodeSpotify ID and Secret in a .env file.
 * Four Commands using the 3rd process.argv item.
-  1. `concert-this`
+  1. `concert-this` 
      - Searches Bands in Town Artist Events API for an artist and renders:
        1. Name of the venue
        2. Venue location
        3. Date of the Event
-  2. `spotify-this-song`
+  2. `spotify-this-song` [Example](/images/spotify-this-song.png)
      - This will show the following information about the song in your terminal/bash window
        1. Artist(s)
        2. The song's name
