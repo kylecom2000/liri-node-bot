@@ -116,8 +116,8 @@ Country: ${res.data.Country} (${res.data.Language})
         case "do-what-it-says":
             console.log("do-what-it-says was checked.");
             fs.readFile('random.txt', 'utf8', function(err, res){
-                var whatItSaysSearch = res.split(",");
-                liriBot(whatItSaysSearch[0],whatItSaysSearch[1],);
+                var whatItSays = res.split(",");
+                liriBot(whatItSays[0],whatItSays[1],);
                 if(err){
                     console.log(chalk`{red There's something wrong with your txt file.}`)
                 }
