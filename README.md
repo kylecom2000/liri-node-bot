@@ -13,7 +13,7 @@
 * 'npm install' of node modules.
 
 * Four Commands using the 3rd process.argv item.
-  1. `concert-this` :musical_note: [_Screen Shot_](/images/movie-this/concert-this.png)
+  1. `concert-this` :musical_note: [_Screen Shot_](/images/concert-this.png)
      - Search Bands in Town Artist Events API for an artist and renders:
        1. Name of the venue
        2. Venue location
@@ -25,7 +25,7 @@
        3. A preview link of the song from Spotify
        4. The album that the song is from
      - If no song is provided then your program will default to "The Sign" by Ace of Base.
-  3. `movie-this` :movie_camera: [_Screen Shot_](/images/movie-this/movie-this.png)
+  3. `movie-this` :movie_camera: [_Screen Shot_](/images/movie-this.png)
      - Output:
        1. Title of the movie.
        2. Year the movie came out.
@@ -36,7 +36,7 @@
        7. Plot of the movie.
        8. Actors in the movie.
      - If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
-  4. `do-what-it-says` :speech_balloon: [_Screen Shot_](/images/movie-this/do-what-it-says.png)
+  4. `do-what-it-says` :speech_balloon: [_Screen Shot_](/images/do-what-it-says.png)
      - Using the `fs` Node package, perform search from random.txt
 
 
