@@ -52,6 +52,9 @@ function liriBot (liriDo, liriLook){
                     // Converting date to my format.
                     var concertDate = concert.datetime.split("T");
                     var momentDate = moment(concertDate[0]).format("DDMMMYYYY");
+                    
+                    // TODO-----Save to .txt file
+                    
                     // Prints the information
                     console.log(chalk`
 Venue: {red ${concert.venue.name}}
@@ -72,11 +75,17 @@ Date: {green ${momentDate}}
 //---------------------------------------------song----------------------------------
         case "spotify-this-song":
             console.log(`Songs from ${liriLook}:`)
+
+            // TODO----IF NO liriLook then do ace of base
+
             spotify.search({
                 type: "track", query: liriLook, limit: 5
                 }).then(function(res){
                     // console.log(res);
                     res.tracks.items.forEach(function(songs){
+
+            // TODO-----Save to .txt file
+
                         console.log(chalk`
 Artist: {red ${songs.artists[0].name}}
 Song Title: {green ${songs.name}}
@@ -96,6 +105,9 @@ Spotify Link: {black {bgBlue ${songs.external_urls.spotify}}}
         case "movie-this":
             var queryUrl = "http://www.omdbapi.com/?t=" + liriLook + "&y=&plot=short&apikey=trilogy";
             axios.get(queryUrl).then(function(res){
+
+                // TO DO- If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
+
                 console.log(chalk`
 Movie: {blueBright ${res.data.Title}}({gray ${res.data.Year}})
 Plot: {red ${res.data.Plot}}
@@ -114,7 +126,6 @@ Country: ${res.data.Country} (${res.data.Language})
 //--------------------------------------what-it----------------------------------------
 //-----------------------------------------------says----------------------------------
         case "do-what-it-says":
-            console.log("do-what-it-says was checked.");
             fs.readFile('random.txt', 'utf8', function(err, res){
                 var whatItSays = res.split(",");
                 liriBot(whatItSays[0],whatItSays[1],);

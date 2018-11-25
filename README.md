@@ -2,7 +2,7 @@
 ## LIRI is a _Language_ Interpretation and Recognition Interface. 
 ## LIRI is a command line node app that takes in parameters and gives you back data.
 
-## Main Contributor: Kyle Bauer
+## Main Contributor: Kyle Bauer 
 
 ### UT Coding Bootcamp homework, November 2018
 #### Requirments
@@ -13,12 +13,12 @@
 * 'npm install' of node modules.
 
 * Four Commands using the 3rd process.argv item.
-  1. `concert-this` [_Screen Shot_](/images/movie-this/concert-this.png)
+  1. `concert-this` :musical_note: [_Screen Shot_](/images/movie-this/concert-this.png)
      - Search Bands in Town Artist Events API for an artist and renders:
        1. Name of the venue
        2. Venue location
        3. Date of the Event
-  2. `spotify-this-song` [_Screen Shot_](/images/spotify-this-song.png)
+  2. `spotify-this-song` :radio: [_Screen Shot_](/images/spotify-this-song.png)
      - Search Spotify and return:
        1. Artist(s)
        2. The song's name
@@ -36,8 +36,8 @@
        7. Plot of the movie.
        8. Actors in the movie.
      - If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
-  4. `do-what-it-says` [_Screen Shot_](/images/movie-this/do-what-it-says.png)
-      - Using the `fs` Node package, perform search from random.txt
+  4. `do-what-it-says` :speech_balloon: [_Screen Shot_](/images/movie-this/do-what-it-says.png)
+     - Using the `fs` Node package, perform search from random.txt
 
 
 #### BONUS
