@@ -32,16 +32,13 @@ liriBot(liriDoThis, liriLookThis);
 
 // Function performing each choice using a switch.
 function liriBot (liriDo, liriLook){
-    
+    var searchLog = `${liriDo}, ${liriLook}`
 
     switch (liriDo) {
 //--------------------------------concert-----------------------------------------
 //--------------------------------------------------------------------------------
 //----------------------------------------this------------------------------------
         case "concert-this":
-            // Display what user looked up:
-            console.log(`Concerts from ${liriLook}`);
-
             // Set the URL for Bands in Town with search term variable.
             var queryUrl = "https://rest.bandsintown.com/artists/" + liriLook + "/events?app_id=codingbootcamp";
 
@@ -53,14 +50,20 @@ function liriBot (liriDo, liriLook){
                     var concertDate = concert.datetime.split("T");
                     var momentDate = moment(concertDate[0]).format("DDMMMYYYY");
                     
-                    // TODO-----Save to .txt file
-                    
                     // Prints the information
                     console.log(chalk`
 Venue: {red ${concert.venue.name}}
 Locaiton: {redBright ${concert.venue.city}},{magenta ${concert.venue.region}},{white ${concert.venue.country}}
 Date: {green ${momentDate}}
                     `);
+                    // Formats information for log(without colors)
+                    var printed = `
+Venue: ${concert.venue.name}
+Locaiton: ${concert.venue.city}, ${concert.venue.region}, ${concert.venue.country}
+Date: ${momentDate}
+                    `;
+                    // Logs information to log.txt
+                    logBook(searchLog, printed);
                 }); // End of forEach.
 
             }).catch(function(err){
@@ -74,24 +77,32 @@ Date: {green ${momentDate}}
 //----------------------------------------this---------------------------------------
 //---------------------------------------------song----------------------------------
         case "spotify-this-song":
-            console.log(`Songs from ${liriLook}:`)
 
             // TODO----IF NO liriLook then do ace of base
+            const spotifySearch = liriLook || "The+Sign+Ace+of+Base";
 
             spotify.search({
-                type: "track", query: liriLook, limit: 5
+                type: "track", query: spotifySearch, limit: 5
                 }).then(function(res){
                     // console.log(res);
                     res.tracks.items.forEach(function(songs){
-
-            // TODO-----Save to .txt file
-
+            
+                        
                         console.log(chalk`
 Artist: {red ${songs.artists[0].name}}
 Song Title: {green ${songs.name}}
 Album: {blue ${songs.album.name}}
 Spotify Link: {black {bgBlue ${songs.external_urls.spotify}}}
                         `);
+                        // TODO-----Save to .txt file
+                        var printed = `
+Artist: ${songs.artists[0].name}
+Song Title: ${songs.name}
+Album: ${songs.album.name}
+Spotify Link: ${songs.external_urls.spotify}
+                        `;
+                        logBook(searchLog, printed);
+
                     });
                 }).catch(function(err){
                     console.log("There's an issue with the seach. Please try again.");
@@ -103,7 +114,10 @@ Spotify Link: {black {bgBlue ${songs.external_urls.spotify}}}
 //------------------------------------------------------------------------------------
 //-----------------------------------------this---------------------------------------
         case "movie-this":
-            var queryUrl = "http://www.omdbapi.com/?t=" + liriLook + "&y=&plot=short&apikey=trilogy";
+
+            const movieSearch = liriLook || "Mr+Nobody";
+
+            var queryUrl = "http://www.omdbapi.com/?t="+movieSearch+"&y=&plot=short&apikey=trilogy";
             axios.get(queryUrl).then(function(res){
 
                 // TO DO- If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
@@ -115,7 +129,16 @@ Players: {green ${res.data.Actors}}
 Ratings: {yellow IMDB-${res.data.imdbRating}}, {magenta RottonTomatoes-${res.data.Ratings[1].Value}}
 Country: ${res.data.Country} (${res.data.Language})
                 `);
-            
+
+                var printed = `
+Movie: ${res.data.Title} (${res.data.Year})
+Plot: ${res.data.Plot}
+Players: ${res.data.Actors}
+Ratings: IMDB-${res.data.imdbRating}, RottonTomatoes-${res.data.Ratings[1].Value}
+Country: ${res.data.Country} (${res.data.Language})
+                `;
+
+                logBook(searchLog, printed);
             }).catch(function(err){
                 console.log("Not all those who wander are lost....but I'm wondering if you're lost?");
             })
@@ -148,3 +171,14 @@ Country: ${res.data.Country} (${res.data.Language})
     }   // -----End of Switch------
 
 }   // ------End of liriBot Function-----
+
+
+
+// Logbook function.
+function logBook(searchLog, printed) {
+    fs.appendFile("log.txt", `\r ${searchLog} \n ${printed}`, function (err) {
+        if (err) {
+            console.log("\r\nUnable to create a log entry.");
+        }
+    });
+}
