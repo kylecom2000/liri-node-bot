@@ -17,8 +17,8 @@ const keys = require("./keys.js");
 const spotify = new Spotify(keys.spotifyKeys);
 
 // Assigning arguments to variables. 
-liriDoThis = process.argv[2];
-liriLookThis = process.argv.slice(3).join("+");
+const liriDoThis = process.argv[2];
+const liriLookThis = process.argv.slice(3).join("+");
 
 // Search selection fun times.
 console.log(chalk`
@@ -56,7 +56,7 @@ Venue: {red ${concert.venue.name}}
 Locaiton: {redBright ${concert.venue.city}},{magenta ${concert.venue.region}},{white ${concert.venue.country}}
 Date: {green ${momentDate}}
                     `);
-                    // Formats information for log(without colors)
+                    // Log.txt variable without chalk colors.
                     var printed = `
 Venue: ${concert.venue.name}
 Locaiton: ${concert.venue.city}, ${concert.venue.region}, ${concert.venue.country}
@@ -94,13 +94,14 @@ Song Title: {green ${songs.name}}
 Album: {blue ${songs.album.name}}
 Spotify Link: {black {bgBlue ${songs.external_urls.spotify}}}
                         `);
-                        // TODO-----Save to .txt file
+                        // Log.txt variable without chalk colors.
                         var printed = `
 Artist: ${songs.artists[0].name}
 Song Title: ${songs.name}
 Album: ${songs.album.name}
 Spotify Link: ${songs.external_urls.spotify}
                         `;
+                        // Function called to print to log.
                         logBook(searchLog, printed);
 
                     });
@@ -114,14 +115,10 @@ Spotify Link: ${songs.external_urls.spotify}
 //------------------------------------------------------------------------------------
 //-----------------------------------------this---------------------------------------
         case "movie-this":
-
             const movieSearch = liriLook || "Mr+Nobody";
-
             var queryUrl = "http://www.omdbapi.com/?t="+movieSearch+"&y=&plot=short&apikey=trilogy";
+
             axios.get(queryUrl).then(function(res){
-
-                // TO DO- If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
-
                 console.log(chalk`
 Movie: {blueBright ${res.data.Title}}({gray ${res.data.Year}})
 Plot: {red ${res.data.Plot}}
@@ -129,7 +126,7 @@ Players: {green ${res.data.Actors}}
 Ratings: {yellow IMDB-${res.data.imdbRating}}, {magenta RottonTomatoes-${res.data.Ratings[1].Value}}
 Country: ${res.data.Country} (${res.data.Language})
                 `);
-
+                // Log.txt variable without chalk colors.
                 var printed = `
 Movie: ${res.data.Title} (${res.data.Year})
 Plot: ${res.data.Plot}
@@ -153,7 +150,9 @@ Country: ${res.data.Country} (${res.data.Language})
                 var whatItSays = res.split(",");
                 liriBot(whatItSays[0],whatItSays[1],);
                 if(err){
-                    console.log(chalk`{red There's something wrong with your txt file.}`)
+                    console.log(chalk`
+{red There's something wrong with your txt file.}
+                    `)
                 }
             })
 
@@ -176,7 +175,7 @@ Country: ${res.data.Country} (${res.data.Language})
 
 // Logbook function.
 function logBook(searchLog, printed) {
-    fs.appendFile("log.txt", `\r ${searchLog} \n ${printed}`, function (err) {
+    fs.appendFile("log.txt", `\r${searchLog}\n${printed}`, function (err) {
         if (err) {
             console.log("\r\nUnable to create a log entry.");
         }
