@@ -78,7 +78,7 @@ Date: ${momentDate}
 //---------------------------------------------song----------------------------------
         case "spotify-this-song":
 
-            // TODO----IF NO liriLook then do ace of base
+            // If no liriLook then do ace of base
             const spotifySearch = liriLook || "The+Sign+Ace+of+Base";
 
             spotify.search({
@@ -115,6 +115,7 @@ Spotify Link: ${songs.external_urls.spotify}
 //------------------------------------------------------------------------------------
 //-----------------------------------------this---------------------------------------
         case "movie-this":
+            // if no movie search, then Mr. Nobody.
             const movieSearch = liriLook || "Mr+Nobody";
             var queryUrl = "http://www.omdbapi.com/?t="+movieSearch+"&y=&plot=short&apikey=trilogy";
 
